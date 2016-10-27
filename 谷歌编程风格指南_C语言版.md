@@ -96,9 +96,10 @@ dir/foo.cc和dir2/foo2.h通常位于相同目录下（像 base/basictypes_unittest.cc和 base
 ## 七、命名
 重要的一致性规则是命名管理，命名风格直接可以直接确定命名实体是：类型、变量、函数、常量、宏等等，无需查找实体声明，我们大脑中的模式匹配引擎依赖于这些命名规则。命名规则具有一定随意性，但相比按个人喜好命名，一致性更重要，所以不管你怎么想，规则总归是规则。
 
-### 1. 通用命名规则（ General Naming Rules）
+### 1. 通用命名规则
 函数命名、变量命名、文件命名应具有描述性，不要过度缩写。
 尽可能给出描述性名称，不要节约空间，让别人很快理解你的代码更重要，不要使用模糊的缩写或随意的字符。
+
 	int price_count_reader;    // No abbreviation.
 	int num_errors;            // "num" is a widespread convention.
 	int num_dns_connections;   // Most people know what "DNS" stands for.
@@ -112,21 +113,22 @@ dir/foo.cc和dir2/foo2.h通常位于相同目录下（像 base/basictypes_unittest.cc和 base
 	int cstmr_id;              // Deletes internal letters.
 
 ### 2. 文件命名
-文件名要全部小写，可以包含下划线（_）或短线（-），按项目约定来，如果没有的话最好用"_"。
+文件名要全部小写，可以包含下划线（\_）或短线（-），按项目约定来，如果没有的话最好用"\_"。
 可接受的文件命名:  
+
 - my_useful_class.cc
 - my-useful-class.cc
 - myusefulclass.cc
 - myusefulclass_test.cc // _unittest and _regtest are deprecated.
 
-C++文件以.cc结尾，头文件以.h结尾。
-不要使用已经存在于/usr/include下的文件名，如db.h。
-通常，尽量让文件名更加明确，http_server_logs.h就比logs.h要好，定义类时文件名一般成对出现，如foo_bar.h和foo_bar.cc，对应类FooBar。
+C++文件以.cc结尾，头文件以.h结尾。  
+不要使用已经存在于/usr/include下的文件名，如db.h。  
+通常，尽量让文件名更加明确，http_server_logs.h就比logs.h要好，定义类时文件名一般成对出现，如foo_bar.h和foo_bar.cc，对应类FooBar。  
 
 
 ### 3. 类型命名
-类型命名每个单词以大写字母开头，不包含下划线： MyExcitingClass、 MyExcitingEnum。
-所有类型命名——类、结构体、类型定义（ typedef）、枚举——使用相同约定，例如：
+类型命名每个单词以大写字母开头，不包含下划线： MyExcitingClass、 MyExcitingEnum。  
+所有类型命名——类、结构体、类型定义（ typedef）、枚举——使用相同约定，例如：  
 
 	// classes and structs
 	class UrlTable { ...
@@ -141,26 +143,26 @@ C++文件以.cc结尾，头文件以.h结尾。
 	
 	
 ### 4. 变量命名
-变量名一律小写，单词间以下划线相连，类的成员变量以下划线结尾，如my_exciting_local_variable、 my_exciting_member_variable_。
+变量名一律小写，单词间以下划线相连，类的成员变量以下划线结尾，如my\_exciting\_local_variable、 my\_exciting\_member\_variable\_。  
 
-**普通变量命名：**
-举例：
+**普通变量命名：**  
+举例：  
+
 	string table_name; // OK - uses underscore.
 	string tablename; // OK - all lowercase.
 	string tableName; // Bad - mixed case.
 	
-**全局变量：**
+**全局变量：**  
 对全局变量没有特别要求，少用就好，可以以g_或其他易与局部变量区分的标志为前缀。
 
 ### 5. 常量命名
-在名称前加k： kDaysInAWeek。
-所有编译时常量（无论是局部的、全局的还是类中的）和其他变量保持些许区别， k后接大写字母开头的单词：
+在名称前加k： kDaysInAWeek。  
+所有编译时常量（无论是局部的、全局的还是类中的）和其他变量保持些许区别，k后接大写字母开头的单词：  
+
 	const int kDaysInAWeek = 7
 	
 ### 6. 函数命名  
-普通函数大小写混合，存取函数则要求与变量名匹配： MyExcitingFunction()、MyExcitingMethod()、 my_exciting_member_variable()、set_my_exciting_member_variable()。
 
-普通函数：
 函数名以大写字母开头，每个单词首字母大写(这是大驼峰命名法或者叫帕斯卡命名法)。单词间没有下划线。如果有大写字母缩写词，倾向于把它当作单个词(例如 StartRpc()而不是 StartRPC())：
 
 	AddTableEntry()
@@ -169,7 +171,7 @@ C++文件以.cc结尾，头文件以.h结尾。
 	
 ### 7. 枚举命名
 
-枚举值可以像常量那样，也可以像宏那样，kEnumName 或者 ENUM_NAME。
+枚举值可以像常量那样，也可以像宏那样，kEnumName 或者 ENUM_NAME。  
 独立枚举值倾向于像常量那样命名，但是也接受像宏那样命名。像UrlTableErrors这样的枚举名称属于类型，因此大小写混合。
 
 	enum UrlTableErrors {
@@ -184,6 +186,270 @@ C++文件以.cc结尾，头文件以.h结尾。
 	};
 
 从2009年1月之前，枚举值的风格都和宏一样。这样比较容易导致命名冲突，因此改为推荐常量枚举命名风格。如果可以的话，新代码尽量使用常量风格来命名。没必要去把老代码都改为常量风格，除非引起了编译错误。
+
+### 8. 宏命名
+
+你并不打算使用宏，对吧？如果使用，像这样： 'MY_MACRO_THAT_SCARES_SMALL_CHILDREN。'  
+参考第四篇预处理宏， 通常是不使用宏的， 如果绝对要用， 其命名像枚举命名一样全部大写、
+使用下划线：  
+
+	#define ROUND(x) ...
+	#define PI_ROUNDED 3.0
+
+	
+## 八、注释
+
+
+注释虽然写起来很痛苦，但对保证代码可读性至为重要，下面的规则描述了应该注释什么、注释在哪儿。当然也要记住，注释的确很重要，但最好的代码本身就是文档（ selfdocumenting） ，类型和变量命名意义明确要比通过注释解释模糊的命名好得多。注释是为别人 （下一个需要理解你的代码的人） 而写的， 认真点吧， 那下一个人可能就是你！
+
+### 1. 注释风格
+
+使用//或/* */，统一就好。
+
+//或/* */都可以， //只是用的更加广泛，在如何注释和注释风格上确保统一。
+
+
+### 2. 文件注释
+
+在每一个文件开头加入版权公告。  
+
+文件注释描述了文件的内容。基本所有的文件都应该要有文件注释：  
+
+#### 许可和作者
+
+每个文件都应该有许可证，为项目选择合适的许可证版本，如Apache 2.0、BSD、 LGPL、 GPL；
+如果你为一个文件做出巨大改变，可以加上自己名字。
+
+#### 文件内容：  
+
+通常，.h文件要对所声明的类的功能和用法作简单说明，.cc文件包含了更多的实现细节或算法讨论，如果你感觉这些实现细节或算法讨论对于阅读有帮助，可以把.cc中的注释放到.h中，并在.cc中指出文档在.h中。
+
+不要单纯在.h和.cc间复制注释，复制的注释偏离了实际意义。
+
+
+### 3. 函数注释
+
+**函数声明：**
+注释于声明之前，描述函数功能及用法，注释使用描述式（ "Opens the file"）而非指令式（ "Open the file"）；注释只是为了描述函数而不是告诉函数做什么。通常，注释不会描述函数如何实现，那是定义部分的事情。   
+
+函数声明处注释的内容：  
+1) inputs（输入） 及 outputs（输出） ；  
+2) 对类成员函数而言：函数调用期间对象是否需要保持引用参数，是否会释放这些参数；  
+3) 如果函数分配了空间，需要由调用者释放；  
+4) 参数是否可以为NULL；  
+5) 是否存在函数使用的性能隐忧（ performance implications） ；  
+6) 如果函数是可重入的（ re-entrant） ，其同步前提（ synchronization assumptions）是什么？  
+
+举例如下：  
+
+	// Returns an iterator for this table.  It is the client's
+	// responsibility to delete the iterator when it is done with it,
+	// and it must not use the iterator once the GargantuanTable object
+	// on which the iterator was created has been deleted.
+	//
+	// The iterator is initially positioned at the beginning of the table.
+	//
+	// This method is equivalent to:
+	//    Iterator* iter = table->NewIterator();
+	//    iter->Seek("");
+	//    return iter;
+	// If you are going to immediately seek to another place in the
+	// returned iterator, it will be faster to use NewIterator()
+	// and avoid the extra seek.
+	Iterator* GetIterator() const;
+	
+但不要有无谓冗余或显而易见的注释，下面的注释就没有必要加上“returns false otherwise”，因为已经暗含其中了：  
+
+	// Returns true if the table cannot hold any more entries.
+	bool IsTableFull();
+
+
+**函数定义：**  
+
+每个函数定义时要以注释说明函数功能和实现要点，如使用的漂亮代码、实现的简要步骤、如此实现的理由、为什么前半部分要加锁而后半部分不需要。不要从.h文件或其他地方的函数声明处直接复制注释，简要说明函数功能是可以的，但重点要放在如何实现上。  
+
+### 4. 变量注释   
+
+通常变量名本身足以很好说明变量用途，特定情况下，需要额外注释说明。  
+
+**全局变量（常量）：**  
+
+和数据成员相似，所有全局变量（常量）也应注释说明含义及用途，如：
+
+	// The total number of tests cases that we run through in this regression test.
+	const int kNumTestCases = 6;
+	
+### 6. 实现注释
+对于实现代码中巧妙的、晦涩的、有趣的、重要的地方加以注释。  
+
+**代码前注释：**  
+
+出彩的或复杂的代码块前要加注释，如：
+
+	// Divide result by two, taking into account that x
+	// contains the carry from the add.
+	for (int i = 0; i < result->size(); i++) {
+	x
+	= (x << 8) + (*result)[i];
+	(*result)[i] = x >> 1;
+	x &= 1;
+	}
+	
+**行注释：**  
+
+比较隐晦的地方要在行尾加入注释，可以在代码之后空两格加行尾注释，如：  
+
+	// If we have enough memory, mmap the data portion too.
+	mmap_budget = max<int64>(0, mmap_budget - index_->length());
+	if (mmap_budget >= data_size_ && !MmapData(mmap_chunk_bytes, mlock))
+	  return;  // Error already logged.
+
+注意，有两块注释描述这段代码，当函数返回时注释提及错误已经被记入日志。  
+前后相邻几行都有注释，可以适当调整使之可读性更好：  
+
+	DoSomething();                  // Comment here so the comments line up.
+	DoSomethingElseThatIsLonger();  // Two spaces between the code and the comment.
+	{ // One space before comment when opening a new scope is allowed,
+	  // thus the comment lines up with the following comments and code.
+	  DoSomethingElse();  // Two spaces before line comments normally.
+	}
+	vector<string> list{// Comments in braced lists describe the next element ..
+						"First item",
+						// .. and should be aligned appropriately.
+						"Second item"};
+	DoSomething(); /* For trailing block comments, one space is fine. */
+
+
+### 7. 标点、拼写和语法
+
+留意标点、拼写和语法，写的好的注释比差的要易读的多。  
+
+注释一般是包含适当大写和句点（ .）的完整的句子，短一点的注释（如代码行尾的注释）可以随意点， 依然要注意风格的一致性。 完整的句子可读性更好， 也可以说明该注释是完整的而不是一点不成熟的想法。  
+
+虽然被别人指出该用分号（ semicolon） 的时候用了逗号（ comma） 有点尴尬。清晰易读的代码还是很重要的，适当的标点、拼写和语法对此会有所帮助。
+
+### 8. TODO注释
+
+对那些临时的、短期的解决方案，或已经够好但并不完美的代码使用TODO注释。  
+
+这样的注释要使用全大写的字符串TODO，后面括号（ parentheses） 里加上你的大名、邮件地址等，还可以加上冒号（ colon）：目的是可以根据统一的TODO格式进行查找：
+
+	// TODO(kl@gmail.com): Use a "*" here for concatenation operator.
+	// TODO(Zeke) change this to use relations.
+	// TODO(bug 12345): remove the "Last visitors" feature
+
+如果加上是为了在“将来某一天做某事”，可以加上一个特定的时间（ "Fix by November 2005"）或事件（ "Remove this code when all clients can handle XML
+responses."）。
+
+## 九、格式
+
+代码风格和格式确实比较随意，但一个项目中所有人遵循同一风格是非常容易的，作为个人未必同意下述格式规则的每一处，但整个项目服从统一的编程风格是很重要的，这样做才能让所有人在阅读和理解代码时更加容易。  
+
+### 1. 行长度
+
+每一行代码字符数不超过80。
+
+我们也认识到这条规则是存有争议的，但如此多的代码都遵照这一规则，我们感觉一致性更重要。
+
+优点： 
+提倡该原则的人认为强迫他们调整编辑器窗口大小很野蛮。很多人同时并排开几个窗口，根本没有多余空间拓宽某个窗口，人们将窗口最大尺寸加以限定，一致使用80列宽，为什么要改变呢？
+
+缺点：
+反对该原则的人则认为更宽的代码行更易阅读，80列的限制是上个世纪60年代的大型机的古板缺陷；现代设备具有更宽的显示屏，很轻松的可以显示更多代码。
+
+结论： 
+80个字符是最大值。
+
+例外：
+1) 如果一行注释包含了超过80字符的命令或URL，出于复制粘贴的方便可以超过80字符；
+2) 包含长路径的可以超出80列，尽量避免；
+3) 头文件保护（防止重复包含）可以无视该原则。
+
+### 2. 非ASCII字符  
+
+尽量不使用非ASCII字符，使用时必须使用 UTF-8格式。  
+
+哪怕是英文，也不应将用户界面的文本硬编码到源代码中，因此非ASCII字符要少用。特殊情况下可以适当包含此类字符，如，代码分析外部数据文件时，可以适当硬编码数据文件中作为分隔符的非ASCII字符串；更常用的是（不需要本地化的）单元测试代码可能包含非ASCII字符串。此类情况下，应使用UTF-8格式，因为很多工具都可以理解和处理其编码， 十六进制编码也可以， 尤其是在增强可读性的情况下——如"\xEF\xBB\xBF"是Unicode的zero-width no-break space字符，以UTF-8格式包含在源文件中是不可见的。
+
+
+### 3. 空格和Tabs
+
+只使用空格，每次缩进2个空格。  
+
+使用空格进行缩进，不要在代码中使用tabs，设定编辑器将tab转为空格。  
+
+### 4. 函数声明与定义
+
+返回类型和函数名在同一行，合适的话，参数也放在同一行。
+
+函数看上去像这样：  
+
+	ReturnType ClassName::FunctionName(Type par_name1, Type par_name2) {
+	  DoSomething();
+	  ...
+	}
+	
+如果同一行文本较多，容不下所有参数：  
+
+	ReturnType ClassName::ReallyLongFunctionName(Type par_name1, Type par_name2,
+												 Type par_name3) {
+	  DoSomething();
+	  ...
+	}
+	
+甚至连第一个参数都放不下：  
+
+	ReturnType LongClassName::ReallyReallyReallyLongFunctionName(
+		Type par_name1,  // 4 space indent
+		Type par_name2,
+		Type par_name3) {
+	  DoSomething();  // 2 space indent
+	  ...
+	}
+	
+注意以下几点：
+
+- 选择好的参数名字。  
+- 如果参数没用的话，参数名可以不要。
+- 返回值总是和函数名在同一行。
+- 函数声明和定义的返回类型的地方不要留空格。
+- 左圆括号（open parenthesis） 总是和函数名在同一行。
+- 函数名和左圆括号间没有空格。
+- 圆括号与参数间没有空格。
+- 左大括号（open curly brace） 总在最后一个参数同一行的末尾处，不是新的一行。
+- 右大括号（close curly brace） 总是单独位于函数最后一行。
+- 右圆括号（close parenthesis） 和左大括号间总是有一个空格。
+- 所有形参应尽可能对齐。
+- 缺省缩进为2个空格。
+- 独立封装的参数保持4个空格的缩进。
+
+	class Foo {
+	 public:
+	  Foo(Foo&&);
+	  Foo(const Foo&);
+	  Foo& operator=(Foo&&);
+	  Foo& operator=(const Foo&);
+	};
+
+	class Shape {
+	 public:
+	  virtual void Rotate(double radians) = 0;
+	};
+
+	class Circle : public Shape {
+	 public:
+	  void Rotate(double radians) override;
+	};
+
+	void Circle::Rotate(double /*radians*/) {}
+	// Bad - if someone wants to implement later, it's not clear what the
+	// variable means.
+	void Circle::Rotate(double) {}
+
+
+Attributes, and macros that expand to attributes, appear at the very beginning of the function declaration or definition, before the return type:
+
+	MUST_USE_RESULT bool IsOK();
 
 
 
