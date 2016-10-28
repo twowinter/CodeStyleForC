@@ -381,7 +381,6 @@ responses."）。
 ### 4. 函数声明与定义
 
 返回类型和函数名在同一行，合适的话，参数也放在同一行。
-
 函数看上去像这样：  
 
 	ReturnType ClassName::FunctionName(Type par_name1, Type par_name2) {
@@ -400,9 +399,9 @@ responses."）。
 甚至连第一个参数都放不下：  
 
 	ReturnType LongClassName::ReallyReallyReallyLongFunctionName(
-		Type par_name1,  // 4 space indent
-		Type par_name2,
-		Type par_name3) {
+	    Type par_name1,  // 4 space indent
+	    Type par_name2,
+	    Type par_name3) {
 	  DoSomething();  // 2 space indent
 	  ...
 	}
@@ -410,18 +409,19 @@ responses."）。
 注意以下几点：
 
 - 选择好的参数名字。  
-- 如果参数没用的话，参数名可以不要。
-- 返回值总是和函数名在同一行。
-- 函数声明和定义的返回类型的地方不要留空格。
-- 左圆括号（open parenthesis） 总是和函数名在同一行。
-- 函数名和左圆括号间没有空格。
-- 圆括号与参数间没有空格。
-- 左大括号（open curly brace） 总在最后一个参数同一行的末尾处，不是新的一行。
-- 右大括号（close curly brace） 总是单独位于函数最后一行。
-- 右圆括号（close parenthesis） 和左大括号间总是有一个空格。
-- 所有形参应尽可能对齐。
-- 缺省缩进为2个空格。
-- 独立封装的参数保持4个空格的缩进。
+- 如果参数没用的话，参数名可以不要。  
+- 返回值总是和函数名在同一行。  
+- 函数声明和定义的返回类型的地方不要留空格。  
+- 左圆括号（open parenthesis） 总是和函数名在同一行。  
+- 函数名和左圆括号间没有空格。  
+- 圆括号与参数间没有空格。  
+- 左大括号（open curly brace） 总在最后一个参数同一行的末尾处，不是新的一行。  
+- 右大括号（close curly brace） 总是单独位于函数最后一行。  
+- 右圆括号（close parenthesis） 和左大括号间总是有一个空格。  
+- 所有形参应尽可能对齐。  
+- 缺省缩进为2个空格。  
+- 独立封装的参数保持4个空格的缩进。  
+
 
 	class Foo {
 	 public:
@@ -451,7 +451,312 @@ Attributes, and macros that expand to attributes, appear at the very beginning o
 
 	MUST_USE_RESULT bool IsOK();
 
+### 5. 函数调用
+
+尽量放在同一行，否则，将实参封装在圆括号中。
+函数调用遵循如下形式：
+
+	bool result = DoSomething(argument1, argument2, argument3);
+	
+如果同一行放不下，可断为多行，后面每一行都和第一个实参对齐，左圆括号后和右圆括号前不要留空格：
+
+	bool result = DoSomething(averyveryveryverylongargument1,
+                              argument2, argument3);
+	
+参数也可以紧随函数调用之后4个空格缩进：  
+
+	if (...) {
+	  ...
+	  ...
+	  if (...) {
+		bool result = DoSomething(
+			argument1, argument2,  // 4 space indent
+			argument3, argument4);
+		...
+	  }
+	  
+有时为了可读性，也可以这样排版：
+
+	// Transform the widget by a 3x3 matrix.
+	my_widget.Transform(x1, x2, x3,
+						y1, y2, y3,
+						z1, z2, z3);
+
+### 6. 条件语句
+
+提倡不在圆括号中添加空格，关键字else另起一行。  
+
+对基本条件语句有两种可以接受的格式，一种在圆括号和条件之间有空格，一种没有。
+
+最常见的是没有空格的格式，那种都可以，还是一致性为主。如果你是在修改一个文件，参考当前已有格式；如果是写新的代码，参考目录下或项目中其他文件的格式，还在徘徊的话，就不要加空格了。
+
+	if (condition) { // no spaces inside parentheses
+	... // 2 space indent.
+	} else { // The else goes on the same line as the closing brace.
+	...
+	}
+	
+如果你倾向于在圆括号内部加空格：  
+
+	if ( condition ) { // spaces inside parentheses - rare
+	... // 2 space indent.
+	} else { // The else goes on the same line as the closing brace.
+	...
+	}
+
+注意所有情况下if和左圆括号间有个空格，右圆括号和左大括号（如果使用的话）间也要有个空格：  
+
+	if(condition) // Bad - space missing after IF.
+	if (condition){ // Bad - space missing before {.
+	if(condition){ // Doubly bad.
+	
+	if (condition) { // Good - proper space after IF and before {.
+
+有些条件语句写在同一行以增强可读性，只有当语句简单并且没有使用else子句时使用：
+
+	if (x == kFoo) return new Foo();
+	if (x == kBar) return new Bar();
+
+如果语句有else分支是不允许的：  
+
+	// Not allowed - IF statement on one line when there is an ELSE clause
+	if (x) DoThis();
+	else DoThat();
+	
+通常，单行语句不需要使用大括号，如果你喜欢也无可厚非，也有人要求if必须使用大括号：
+
+	if (condition)
+	  DoSomething(); // 2 space indent.
+	  
+	if (condition) {
+	  DoSomething(); // 2 space indent.
+	}
+	
+但如果语句中哪一分支使用了大括号的话，其他部分也必须使用：  
+
+	// Not allowed - curly on IF but not ELSE
+	if (condition) {
+	  foo;
+	} else
+	  bar;
+	  
+	// Not allowed - curly on ELSE but not IF
+	if (condition)
+	  foo;
+	else {
+	  bar;
+	}
+
+	// Curly braces around both IF and ELSE required because
+	// one of the clauses used braces.
+	if (condition) {
+	  foo;
+	} else {
+	  bar;
+	}
+
+	
+### 7. 循环和switch选择语句
+
+switch语句可以使用大括号分块；空循环体应使用{}或continue。
+
+switch语句中的case块可以使用大括号也可以不用，取决于你的喜好，使用时要依下文所述。
+
+如果有不满足case枚举条件的值，要总是包含一个default（如果有输入值没有case去处理，编译器将报警）。如果default永不会执行，可以简单的使用assert：
+
+	switch (var) {
+	  case 0: {  // 2 space indent
+		...      // 4 space indent
+		break;
+	  }
+	  case 1: {
+		...
+		break;
+	  }
+	  default: {
+		assert(false);
+	  }
+	}
+	
+单句声明的循环体中，括号是可选的。
+
+	for (int i = 0; i < kSomeNumber; ++i)
+	  printf("I love you\n");
+
+	for (int i = 0; i < kSomeNumber; ++i) {
+	  printf("I take it back\n");
+	}
+
+空循环，要用括号或者continue，而不能直接用个分号。
+
+	while (condition) {
+	  // Repeat test until it returns false.
+	}
+	for (int i = 0; i < kSomeNumber; ++i) {}  // Good - empty body.
+	while (condition) continue;  // Good - continue indicates no logic.
+
+	while (condition);  // Bad - looks like part of do/while loop.
 
 
+### 8. 指针和引用表达式
 
+箭头（->）前后不要有空格，指针/地址操作符（*、&）后不要有空格。
+
+下面是指针和引用表达式的正确范例：
+
+	x = *p;
+	p = &x;
+	x = r->y;
+	
+注意：  
+
+- 在访问成员时，箭头前后没有空格；
+- 指针操作符*或&后没有空格。  
+
+在声明指针变量或参数时，星号与类型或变量名紧挨都可以：
+
+	// These are fine, space preceding.
+	char *c;
+	const string &str;
+	
+	// These are fine, space following.
+	char* c; // but remember to do "char* c, *d, *e, ...;"!
+	const string& str;
+	
+	char * c; // Bad - spaces on both sides of *
+	const string & str; // Bad - spaces on both sides of &
+	
+同一个文件（新建或现有）中起码要保持一致。
+
+### 9. 布尔表达式  
+
+如果一个布尔表达式超过标准行宽（0字符），如果断行要统一一下。
+下例中，逻辑与（&&）操作符总位于行尾：
+
+	if (this_one_thing > this_other_thing &&
+	    a_third_thing == a_fourth_thing &&
+	    yet_another & last_one) {
+	  ...
+	}
+	
+两个逻辑与（&&）操作符都位于行尾，可以考虑额外插入圆括号，合理使用的话对增强可读性是很有帮助的。
+
+### 10. 返回值
+
+return表达式中不要使用圆括号。
+
+	return result;                  // No parentheses in the simple case.
+	// Parentheses OK to make a complex expression more readable.
+	return (some_long_condition &&
+			another_condition);
+			
+	return (value);                // You wouldn't write var = (value);
+	return(result);                // return is not a function!
+
+	
+### 11. 变量及数组初始化
+
+选择=还是()。
+需要做二者之间做出选择，下面的形式都是正确的：
+
+	int x = 3;
+	int x(3);
+	string name("Some Name");
+	string name = "Some Name"
+	
+### 12. 预处理指令
+
+预处理指令不要缩进，从行首开始。
+即使预处理指令位于缩进代码块中，指令也应从行首开始。
+
+	// Good - directives at beginning of line
+	  if (lopsided_score) {
+	#if DISASTER_PENDING      // Correct -- Starts at beginning of line
+		DropEverything();
+	# if NOTIFY               // OK but not required -- Spaces after #
+		NotifyClient();
+	# endif
+	#endif
+		BackToNormal();
+	  }
+	  
+	// Bad - indented directives
+	  if (lopsided_score) {
+		#if DISASTER_PENDING  // Wrong!  The "#if" should be at beginning of line
+		DropEverything();
+		#endif                // Wrong!  Do not indent "#endif"
+		BackToNormal();
+	  }	  
+
+  
+### 13. 水平留白
+水平留白的使用因地制宜。不要在行尾添加无谓的留白。
+
+#### 通常：  
+
+	void f(bool b) {  // Open braces should always have a space before them.
+	  ...
+	int i = 0;  // Semicolons usually have no space before them.
+	// Spaces inside braces for braced-init-list are optional.  If you use them,
+	// put them on both sides!
+	int x[] = { 0 };
+	int x[] = {0};
+
+添加冗余的留白会给其他人编辑时造成额外负担，例如在他们合并代码的时候，即使他们可以去除掉这个空格。因此，不要引入多余的空格。如果你不小心引入了多余的空格要尽快去掉，或者在专门清理空格时去掉（确信没有其他人同时在使用该文件）。
+
+#### 循环和垂直留白：  
+
+	if (b) {          // Space after the keyword in conditions and loops.
+	} else {          // Spaces around else.
+	}
+	while (test) {}   // There is usually no space inside parentheses.
+	switch (i) {
+	for (int i = 0; i < 5; ++i) {
+	// Loops and conditions may have spaces inside parentheses, but this
+	// is rare.  Be consistent.
+	switch ( i ) {
+	if ( test ) {
+	for ( int i = 0; i < 5; ++i ) {
+	// For loops always have a space after the semicolon.  They may have a space
+	// before the semicolon, but this is rare.
+	for ( ; i < 5 ; ++i) {
+	  ...
+
+	// Range-based for loops always have a space before and after the colon.
+	for (auto x : counts) {
+	  ...
+	}
+	switch (i) {
+	  case 1:         // No space before colon in a switch case.
+		...
+	  case 2: break;  // Use a space after a colon if there's code after it.
+
+#### 操作符：  
+
+	// Assignment operators always have spaces around them.
+	x = 0;
+
+	// Other binary operators usually have spaces around them, but it's
+	// OK to remove spaces around factors.  Parentheses should have no
+	// internal padding.
+	v = w * x + y / z;
+	v = w*x + y/z;
+	v = w * (x + z);
+
+	// No spaces separating unary operators and their arguments.
+	x = -5;
+	++x;
+	if (x && !y)
+	  ...
+  
+### 14. 垂直留白
+垂直留白越少越好。
+
+这不仅仅是规则而是原则问题了：不是非常有必要的话就不要使用空行。尤其是：不要在两个函数定义之间空超过2行，函数体头、尾不要有空行，函数体中也不要随意添加空行。
+
+基本原则是：同一屏可以显示越多的代码，程序的控制流就越容易理解。当然，过于密集的代码块和过于疏松的代码块同样难看，取决于你的判断，但通常是越少越好。
+
+一些关于空行的经验也许有用：
+- 函数开始和结束的换行对可读性基本没什么帮助。
+- 在连续的if-else的语句块中的空行也许能让代码更有可读性。
 
